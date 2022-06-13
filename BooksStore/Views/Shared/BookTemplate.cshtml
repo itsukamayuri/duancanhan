@@ -1,0 +1,28 @@
+﻿@model Book
+<link href="~/css/Style.css" rel="stylesheet" />
+
+<div class="card" style="width: 100%;">
+    <section class="menu" id="menu">
+
+        <h1 class="heading"> Manga Store </h1>
+
+        <div class="box-container">
+
+            <div class="box">
+                <img src="@Model.Description" alt="Gosick " />
+                <h3>@Model.Title</h3>
+                <h5>@Model.Price.ToString("c")</h5>
+                <form id="@Model.BookID" asp-page="/MyCart" method="post">
+                    <input type="hidden" asp-for="BookID" />
+                    <input type="hidden" name="returnUrl"
+                           value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+
+                    <div>
+                        <button type="submit" class="btn"> Add To Cart</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </section>
+</div>

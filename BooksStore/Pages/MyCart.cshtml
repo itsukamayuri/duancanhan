@@ -1,0 +1,66 @@
+﻿@page
+@model MyCartModel
+
+<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="~/css/CartStyle.css" rel="stylesheet" />
+
+<div class="container">
+
+    <h1 class="heading">Game <span>Cart</span></h1>
+
+    <div class="cart">
+
+        <div class="products">
+
+            @foreach (var line in Model.myCart.Lines)
+            {
+                <div class="product">
+
+                    <img src="@line.Book.Description">
+
+                    <div class="product-info">
+
+                        <h3 class="product-name">@line.Book.Title</h3>
+
+                        <h4 class="product-price">@line.Book.Price.ToString("c")</h4>
+
+                        <h4 class="product-offer">@((line.Quantity * line.Book.Price).ToString("c"))</h4>
+
+                        <p class="product-quantity">Quantity: <input value="@line.Quantity" name=""></p>
+
+                        <form asp-page-handler="Remove" method="post">
+                            <input type="hidden" name="BookID"
+                                   value="@line.Book.BookID" />
+                            <input type="hidden" name="returnUrl"
+                                   value="@Model.ReturnUrl" />
+                            <button type="submit" class="product-remove">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+
+                                <span class="remove">Remove</span>
+                            </button>
+                        </form>
+
+                    </div>
+
+                </div>
+            }
+        </div>
+
+        <div class="cart-total">
+
+            <p>
+
+                <span>Total Price</span>
+
+                <span>@Model.myCart.ComputeTotalValue().ToString("c")</span>
+
+            </p>
+
+            <a class="btn btn-info" href="@Model.ReturnUrl">Continue shopping</a>
+            <a asp-action="Checkout" asp-controller="Order">Proceed to Checkout</a>
+
+        </div>
+
+    </div>
+
+</div>
